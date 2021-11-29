@@ -10,16 +10,12 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/users")
 public class UserController {
-
-
     private final UserRepository userRepository;
-    private final UserDAL userDAL;
 
     //initialize DAL object via constructor autowiring
     @Autowired
-    UserController(UserRepository userRepository, UserDAL userDAL){
+    UserController(UserRepository userRepository){
         this.userRepository = userRepository;
-        this.userDAL = userDAL;
     }
 
     @GetMapping("/getAllUsers")
@@ -42,7 +38,7 @@ public class UserController {
     //change method implementation to use DAL and hence MongoTemplate
     @RequestMapping(value = "/settings/{userId}", method = RequestMethod.GET)
     public Object getAllUserSettings(@PathVariable String userId) {
-        User user = userDAL.findOne(userId);
+        User user = userRepository.findOne(userId);
         if (user != null) {
             return user.getUserSettings();
         } else {
@@ -53,7 +49,7 @@ public class UserController {
     //change method implementation to use DAL and hence MongoTemplate
     @RequestMapping(value = "/settings/{userId}/{key}", method = RequestMethod.GET)
     public String getUserSetting(@PathVariable String userId, @PathVariable String key) {
-        User user = userDAL.findOne(userId);
+        User user = userRepository.findOne(userId);
         if (user != null) {
             return user.getUserSettings().get(key);
         } else {
@@ -63,7 +59,7 @@ public class UserController {
 
     @RequestMapping(value = "/settings/{userId}/{key}/{value}", method = RequestMethod.POST)
     public String addUserSetting(@PathVariable String userId, @PathVariable String key, @PathVariable String value) {
-        User user = userDAL.findOne(userId);
+        User user = userRepository.findOne(userId);
         if (user != null) {
             user.getUserSettings().put(key, value);
             userRepository.save(user);
