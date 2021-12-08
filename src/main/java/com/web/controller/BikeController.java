@@ -1,20 +1,14 @@
 package com.web.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.web.Model.storage.Bike;
 import com.web.service.BikeSearchService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/bike")
@@ -25,15 +19,23 @@ public class BikeController {
 	  private BikeSearchService bikeSearchService;
 	  
 	  @PostMapping(path="/addBike", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	  public ResponseEntity<?> addBike(@RequestBody Bike bike) {
-		  Bike save = bikeSearchService.addBike(bike);
-		  return ResponseEntity.ok(save);
+	  public ResponseEntity<Bike> addBike(@RequestBody Bike bike) {
+
+			Bike save = bikeSearchService.addBike(bike);
+			if (save != null) {
+				return new ResponseEntity<>(save, HttpStatus.CREATED);
+			}
+		  return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	  }
 	  
 	  @GetMapping("/getAllBike")
 	  public ResponseEntity<List<Bike>> getAllBike(){
 		  List<Bike> bikes = bikeSearchService.getAllBikes();
-		  return ResponseEntity.ok(bikes);
+		  if(bikes.size()>=0){
+		  return new ResponseEntity<>(bikes, HttpStatus.OK);
+	  }
+		  return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
 	  }
 	  
 	  
