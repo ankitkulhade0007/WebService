@@ -58,6 +58,17 @@ public class BikeRepositoryImpl implements CustomBikeRepository{
         return  mongoTemplate.find(query, Bike.class);
     }
 
+    @Override
+    public void deleteBikeById(String id) {
+        Query query = new Query();
+        query.addCriteria(where("id").is(id));
+        Bike bike = mongoTemplate.findOne(query, Bike.class);
+
+        if(bike != null){
+            mongoTemplate.remove(query.addCriteria(where("id").is(id)));
+        }
+    }
+
     // find bike where company-name not include Honda
     // Sort the result by bike-name in descending order
     @Override

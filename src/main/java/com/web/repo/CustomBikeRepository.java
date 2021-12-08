@@ -14,4 +14,5 @@ public interface CustomBikeRepository{
     List<Bike> getBikeBasedOnFilter(List<BikeFilter> bikeFilterList);
     List<Bike> getBikeInDescingingOrderByNotIncludingCompanyName(String companyName);
     List<Bike> getBikeInAscendingOrderByCompanyName(String CompanyName);
+    void deleteBikeById(String id);
 }
