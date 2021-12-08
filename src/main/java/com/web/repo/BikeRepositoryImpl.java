@@ -65,7 +65,7 @@ public class BikeRepositoryImpl implements CustomBikeRepository{
         Bike bike = mongoTemplate.findOne(query, Bike.class);
 
         if(bike != null){
-            mongoTemplate.remove(query.addCriteria(where("id").is(id)));
+            mongoTemplate.remove(query.addCriteria(where("id").is(id)), Bike.class);
         }
     }
 
