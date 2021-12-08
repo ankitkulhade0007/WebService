@@ -11,9 +11,10 @@ public class Bike {
 	private String company;
 	private String checisNumber;
 	private String engineNumber;
+	private String purchaseDate;
 	
 	
-	public Bike(long id, String name, String model, String company, String checisNumber, String engineNumber) {
+	public Bike(long id, String name, String model, String company, String checisNumber, String engineNumber, String purchaseDate) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -21,6 +22,7 @@ public class Bike {
 		this.company = company;
 		this.checisNumber = checisNumber;
 		this.engineNumber = engineNumber;
+		this.purchaseDate = purchaseDate;
 	}
 	public long getId() {
 		return id;
@@ -59,4 +61,11 @@ public class Bike {
 		this.engineNumber = engineNumber;
 	}
 
+	public String getPurchaseDate() {
+		return purchaseDate;
+	}
+
+	public void setPurchaseDate(String purchaseDate) {
+		this.purchaseDate = purchaseDate;
+	}
 }
