@@ -104,8 +104,17 @@ public class BikeRepositoryImpl implements CustomBikeRepository{
         mongoTemplate.updateFirst(query(where("id").is(bikeId)),update, Bike.class);
     }
 
+    // exists -> return true is query criteria exist or else false
+    boolean checkWeatherIdExistOrNot(String id){
+        Query query = new Query();
+        query.addCriteria(where("id").is(id));
+
+        boolean result = mongoTemplate.exists(query, Bike.class);
+        return  result;
+    }
+
 }
-// Query, addCriteria, where, is, with, Sort, Direction, ASC, DESC, Update, set, updateFirst
+// Query, addCriteria, where, is, with, Sort, Direction, ASC, DESC, Update, set, updateFirst, exists
 
 // Query, addCriteria(where().is()).with(Sort.by(Sort.Direction.DESC,"name"));
 // Query, addCriteria(where().is()).with(Sort.by(Sort.Direction.ASC,"name"));
