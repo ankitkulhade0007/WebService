@@ -3,6 +3,7 @@ package com.web.repo;
 import com.web.Model.Enum.BikeConstant;
 import com.web.Model.storage.Bike;
 import com.web.Model.storage.BikeFilter;
+import com.web.exception.RecordNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
@@ -66,6 +67,8 @@ public class BikeRepositoryImpl implements CustomBikeRepository{
 
         if(bike != null){
             mongoTemplate.remove(query.addCriteria(where("id").is(id)), Bike.class);
+        }else {
+            throw new RecordNotFoundException("following id not found  "+id);
         }
     }
 
